@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Winston L Mendoza - Resume</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,10 +42,38 @@
     .section {
       margin-top: 30px;
     }
+    .download-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      font-size: 12px;
+      background-color: #6a6a6a;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+    }
+    .download-button svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <button class="download-button" onclick="downloadPDF()">
+    Download and convert to PDF
+    <svg viewBox="0 0 24 24">
+      <path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.34v4h6.66V9h3.34L12 2z" />
+    </svg>
+  </button>
+
+  <div class="container" id="resume">
     <h1>Winston L Mendoza</h1>
     <p><strong>Full-Stack Developer / JavaScript Developer / Website Manager</strong></p>
     <p>Email: winston.mendoza1985@gemail.com | Phone: (032) 9913650956 | LinkedIn: <a href="https://linkedin.com/in/winston-l-mendoza">linkedin.com/in/winston-l-mendoza</a></p>
@@ -122,5 +151,21 @@
       <p>Available upon request.</p>
     </div>
   </div>
+
+  <script>
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const resume = document.getElementById('resume');
+      await doc.html(resume, {
+        callback: function (pdf) {
+          pdf.save("Winston-L-Mendoza-Resume.pdf");
+        },
+        x: 10,
+        y: 10,
+        html2canvas: { scale: 0.5 }
+      });
+    }
+  </script>
 </body>
 </html>
